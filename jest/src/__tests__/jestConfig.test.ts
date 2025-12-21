@@ -143,4 +143,3 @@ describe("detectJestConfig", () => {
         expect(info.workspaces).toEqual([]);
     });
 });
-
