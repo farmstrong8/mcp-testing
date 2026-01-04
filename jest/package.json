@@ -4,7 +4,7 @@
     "description": "MCP server for running Jest tests",
     "type": "module",
     "bin": {
-        "mcp-jest": "./dist/index.js"
+        "mcp-jest": "./dist/main.js"
     },
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
@@ -17,7 +17,8 @@
     "keywords": ["mcp", "jest", "testing", "ai"],
     "license": "MIT",
     "dependencies": {
-        "@modelcontextprotocol/sdk": "^1.0.0"
+        "@modelcontextprotocol/sdk": "1.17.5",
+        "zod": "^3"
     },
     "devDependencies": {
         "@types/node": "^22.0.0",
