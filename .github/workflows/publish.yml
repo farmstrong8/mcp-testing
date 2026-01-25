@@ -3,7 +3,7 @@ name: Publish
 on:
   push:
     tags:
-      - "mcp-jest@*"
+      - "jest@*"
 
 jobs:
   publish:
@@ -11,7 +11,7 @@ jobs:
 
     permissions:
       contents: read
-      id-token: write
+      id-token: write  # This is what enables trusted publishing
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
@@ -32,8 +32,6 @@ jobs:
       - name: Run tests
         run: npm run test && npm run test:integration
 
-      - name: Publish mcp-jest
-        run: npm publish --workspace=mcp-jest --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+      - name: Publish jest package
+        run: npm publish --workspace=jest --provenance --access public
+        # No NODE_AUTH_TOKEN needed - uses OIDC via id-token: write

@@ -1,7 +1,14 @@
 {
-    "name": "mcp-jest",
-    "version": "0.1.0",
+    "name": "@astro-forge/mcp-jest",
+    "version": "0.2.2",
     "description": "MCP server for running Jest tests",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/farmstrong8/mcp-testing"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
     "type": "module",
     "bin": {
         "mcp-jest": "./dist/main.js"

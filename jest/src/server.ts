@@ -55,6 +55,9 @@ export function createServer(): McpServer {
                             text: JSON.stringify(result.results, null, 2),
                         },
                     ],
+                    structuredContent: {
+                        results: result.results,
+                    },
                 };
             } else {
                 return {
@@ -64,6 +67,10 @@ export function createServer(): McpServer {
                             text: `Jest execution failed to produce parseable output.\n\nSTDOUT:\n${result.stdout}\n\nSTDERR:\n${result.stderr}`,
                         },
                     ],
+                    structuredContent: {
+                        results: null,
+                        error: `Jest execution failed. STDOUT: ${result.stdout}\nSTDERR: ${result.stderr}`,
+                    },
                     isError: true,
                 };
             }
@@ -112,6 +119,9 @@ export function createServer(): McpServer {
                             text: JSON.stringify(result.results, null, 2),
                         },
                     ],
+                    structuredContent: {
+                        results: result.results,
+                    },
                 };
             } else {
                 return {
@@ -121,6 +131,10 @@ export function createServer(): McpServer {
                             text: `Jest execution failed to produce parseable output.\n\nSTDOUT:\n${result.stdout}\n\nSTDERR:\n${result.stderr}`,
                         },
                     ],
+                    structuredContent: {
+                        results: null,
+                        error: `Jest execution failed. STDOUT: ${result.stdout}\nSTDERR: ${result.stderr}`,
+                    },
                     isError: true,
                 };
             }
@@ -162,13 +176,18 @@ export function createServer(): McpServer {
                 testNamePattern,
             });
 
+            const combinedOutput = `${result.stdout}\n${result.stderr}`;
             return {
                 content: [
                     {
                         type: "text",
-                        text: `Exit code: ${result.exitCode}\n\nOutput:\n${result.stdout}\n${result.stderr}`,
+                        text: `Exit code: ${result.exitCode}\n\nOutput:\n${combinedOutput}`,
                     },
                 ],
+                structuredContent: {
+                    exitCode: result.exitCode,
+                    output: combinedOutput,
+                },
             };
         }
     );
@@ -195,6 +214,9 @@ export function createServer(): McpServer {
                 content: [
                     { type: "text", text: JSON.stringify(config, null, 2) },
                 ],
+                structuredContent: {
+                    config,
+                },
             };
         }
     );

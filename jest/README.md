@@ -1,26 +1,24 @@
-# mcp-jest
+# @astro-forge/mcp-jest
 
 MCP server for running Jest tests from AI assistants.
 
 ## Installation
 
 Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json`):
-
 ```json
 {
     "mcpServers": {
         "jest": {
             "command": "npx",
-            "args": ["-y", "mcp-jest"]
+            "args": ["-y", "@astro-forge/mcp-jest"]
         }
     }
 }
 ```
 
 Or install globally:
-
 ```bash
-npm install -g mcp-jest
+npm install -g @astro-forge/mcp-jest
 ```
 
 ## Tools
@@ -69,7 +67,6 @@ Detect Jest configuration, package manager, and monorepo structure.
 ## Output Schema
 
 ### TestResults
-
 ```typescript
 interface TestResults {
     command: string;      // The Jest command executed
@@ -86,7 +83,6 @@ interface TestResults {
 ```
 
 ### TestFailure
-
 ```typescript
 interface TestFailure {
     testName: string;      // Test name
@@ -112,7 +108,6 @@ interface TestFailure {
 Tested with Jest 27, 28, 29. The `--json` output format has been stable across these versions.
 
 ## Development
-
 ```bash
 # Build
 npm run build
