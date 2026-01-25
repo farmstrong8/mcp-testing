@@ -1,6 +1,6 @@
 {
     "name": "@astro-forge/mcp-jest",
-    "version": "0.2.3",
+    "version": "0.2.4",
     "description": "MCP server for running Jest tests",
     "repository": {
         "type": "git",
