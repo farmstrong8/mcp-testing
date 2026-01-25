@@ -1,6 +1,6 @@
 {
     "name": "@astro-forge/mcp-jest",
-    "version": "0.2.2",
+    "version": "0.2.3",
     "description": "MCP server for running Jest tests",
     "repository": {
         "type": "git",
@@ -15,13 +15,20 @@
     },
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
-    "files": ["dist"],
+    "files": [
+        "dist"
+    ],
     "scripts": {
         "build": "tsc",
         "test": "vitest run",
         "test:watch": "vitest"
     },
-    "keywords": ["mcp", "jest", "testing", "ai"],
+    "keywords": [
+        "mcp",
+        "jest",
+        "testing",
+        "ai"
+    ],
     "license": "MIT",
     "dependencies": {
         "@modelcontextprotocol/sdk": "1.17.5",
@@ -33,4 +40,3 @@
         "vitest": "^2.1.0"
     }
 }
-
