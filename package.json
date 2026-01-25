@@ -9,9 +9,9 @@
         "build": "npm run build --workspaces --if-present",
         "test": "npm run test --workspaces --if-present",
         "test:integration": "vitest run",
-        "release:jest": "npm version patch --workspace=jest && git push --follow-tags",
-        "release:jest:minor": "npm version minor --workspace=jest && git push --follow-tags",
-        "release:jest:major": "npm version major --workspace=jest && git push --follow-tags"
+        "release:jest": "npm version patch --workspace=jest --no-git-tag-version",
+        "release:jest:minor": "npm version minor --workspace=jest --no-git-tag-version",
+        "release:jest:major": "npm version major --workspace=jest --no-git-tag-version"
     },
     "devDependencies": {
         "vitest": "^2.1.0"

@@ -1,20 +1,40 @@
 name: Publish
 
 on:
-  push:
-    tags:
-      - "jest@*"
+  workflow_dispatch:
+    inputs:
+      package:
+        description: "Package to release"
+        required: true
+        type: choice
+        options:
+          - jest
 
 jobs:
-  publish:
+  release:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
-      id-token: write  # This is what enables trusted publishing
+      contents: write
+      id-token: write
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Get version from package.json
+        id: version
+        run: |
+          VERSION=$(node -p "require('./${{ inputs.package }}/package.json').version")
+          TAG="${{ inputs.package }}@$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists
+        run: |
+          if git rev-parse "${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "::error::Tag ${{ steps.version.outputs.tag }} already exists. Did you forget to bump the version?"
+            exit 1
+          fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -29,9 +49,23 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Run tests
-        run: npm run test && npm run test:integration
+      - name: Run unit tests
+        run: npm run test
 
-      - name: Publish jest package
-        run: npm publish --workspace=jest --provenance --access public
-        # No NODE_AUTH_TOKEN needed - uses OIDC via id-token: write
+      - name: Run integration tests
+        run: npm run test:integration
+
+      - name: Create and push tag
+        run: |
+          git tag "${{ steps.version.outputs.tag }}"
+          git push origin "${{ steps.version.outputs.tag }}"
+
+      - name: Publish to npm
+        run: npm publish --workspace=${{ inputs.package }} --provenance --access public
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: ${{ inputs.package }} v${{ steps.version.outputs.version }}
+          generate_release_notes: true
