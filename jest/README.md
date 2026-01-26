@@ -4,21 +4,20 @@ MCP server for running Jest tests from AI assistants.
 
 ## Installation
 
-Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json`):
-```json
-{
-    "mcpServers": {
-        "jest": {
-            "command": "npx",
-            "args": ["-y", "@astro-forge/mcp-jest"]
-        }
-    }
-}
+Find your Node path:
+```bash
+which node
+which npx
 ```
 
-Or install globally:
-```bash
-npm install -g @astro-forge/mcp-jest
+Configure with both paths:
+```jsonc
+{
+    "Jest": {
+        "command": "/path/to/node",
+        "args": ["/path/to/npx", "-y", "@astro-forge/mcp-jest"]
+    }
+}
 ```
 
 ## Tools
