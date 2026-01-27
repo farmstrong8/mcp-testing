@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { TestFailureSchema } from "./testFailure.js";
+import { TestPassSchema } from "./testPass.js";
 
 /**
  * Schema for structured test results.
@@ -14,6 +15,7 @@ export const TestResultsSchema = z.object({
         skipped: z.number().describe("Number of skipped tests"),
         duration: z.number().describe("Test duration in milliseconds"),
     }),
+    passes: z.array(TestPassSchema).describe("Details of each passing test"),
     failures: z
         .array(TestFailureSchema)
         .describe("Details of each failing test"),

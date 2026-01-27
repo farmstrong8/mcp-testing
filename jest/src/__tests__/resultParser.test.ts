@@ -105,6 +105,18 @@ describe("parseJestOutput", () => {
         expect(result.summary.failed).toBe(0);
         expect(result.summary.skipped).toBe(0);
         expect(result.failures).toHaveLength(0);
+
+        expect(result.passes).toHaveLength(2);
+        expect(result.passes[0]).toEqual({
+            testName: "adds numbers",
+            fullName: "math > adds numbers",
+            file: "/path/to/math.test.js",
+        });
+        expect(result.passes[1]).toEqual({
+            testName: "subtracts numbers",
+            fullName: "math > subtracts numbers",
+            file: "/path/to/math.test.js",
+        });
     });
 
     test("parses failing test output with failure details", () => {
@@ -124,6 +136,10 @@ describe("parseJestOutput", () => {
         expect(failure.matcherName).toBe("toBe");
         expect(failure.expected).toBe("3");
         expect(failure.received).toBe("2");
+
+        // Verify passing tests are still captured alongside failures
+        expect(result.passes).toHaveLength(1);
+        expect(result.passes[0].testName).toBe("adds numbers");
     });
 
     test("parses skipped tests", () => {
@@ -133,6 +149,10 @@ describe("parseJestOutput", () => {
         expect(result.summary.total).toBe(3);
         expect(result.summary.passed).toBe(2);
         expect(result.summary.skipped).toBe(1);
+
+        // Skipped tests should not appear in passes array
+        expect(result.passes).toHaveLength(1);
+        expect(result.passes[0].testName).toBe("adds numbers");
     });
 
     test("calculates duration from test results", () => {

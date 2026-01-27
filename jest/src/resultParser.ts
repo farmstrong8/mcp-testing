@@ -11,7 +11,14 @@ export interface TestResults {
         skipped: number;
         duration: number;
     };
+    passes: TestPass[];
     failures: TestFailure[];
+}
+
+export interface TestPass {
+    testName: string;
+    fullName: string;
+    file: string;
 }
 
 export interface TestFailure {
@@ -123,21 +130,30 @@ export function parseJestOutput(
 ): TestResults {
     const data: JestJsonOutput = JSON.parse(jsonOutput);
 
+    const passes: TestPass[] = [];
     const failures: TestFailure[] = [];
 
     for (const testResult of data.testResults) {
         for (const assertion of testResult.assertionResults) {
-            if (assertion.status === "failed") {
+            const fullName = [
+                ...assertion.ancestorTitles,
+                assertion.title,
+            ].join(" > ");
+
+            if (assertion.status === "passed") {
+                passes.push({
+                    testName: assertion.title,
+                    fullName,
+                    file: testResult.name,
+                });
+            } else if (assertion.status === "failed") {
                 const message = assertion.failureMessages.join("\n");
                 const { expected, received, matcherName } =
                     extractExpectedReceived(message);
 
                 failures.push({
                     testName: assertion.title,
-                    fullName: [
-                        ...assertion.ancestorTitles,
-                        assertion.title,
-                    ].join(" > "),
+                    fullName,
                     file: testResult.name,
                     line:
                         assertion.location?.line ??
@@ -169,6 +185,7 @@ export function parseJestOutput(
             skipped: data.numPendingTests,
             duration,
         },
+        passes,
         failures,
     };
 }
