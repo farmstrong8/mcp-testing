@@ -1,7 +1,6 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { runJestTests, runJestDebug } from "./testRunner.js";
-import { detectJestConfig } from "./jestConfig.js";
+import { runJestTests, runJestDebug, detectJestConfig } from "./core/index.js";
 import { TestResultsSchema, JestConfigInfoSchema } from "./schemas/index.js";
 
 /**

@@ -9,25 +9,6 @@ MCP (Model Context Protocol) servers for running tests from AI assistants like C
 | [mcp-jest](./jest/) | Jest test runner MCP server | ✅ Available |
 | mcp-vitest | Vitest test runner MCP server | 🚧 Coming soon |
 
-## Quick Start
-
-Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/claude_desktop_config.json`):
-
-```json
-{
-    "mcpServers": {
-        "jest": {
-            "command": "npx",
-            "args": ["-y", "mcp-jest"]
-        }
-    }
-}
-```
-
-Then ask Claude to run your tests:
-
-> "Run the tests in /path/to/my/project"
-
 ## Why MCP for Testing?
 
 Traditional test output is designed for humans reading terminals. MCP test servers provide:

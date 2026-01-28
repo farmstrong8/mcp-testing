@@ -20,8 +20,11 @@
     ],
     "scripts": {
         "build": "tsc",
-        "test": "vitest run",
-        "test:watch": "vitest"
+        "test": "vitest run --config src/testing/configs/unit.config.ts",
+        "test:watch": "vitest --config src/testing/configs/unit.config.ts",
+        "test:integration": "vitest run --config src/testing/configs/integration.config.ts",
+        "test:e2e": "vitest run --config src/testing/configs/e2e.config.ts",
+        "test:agent": "vitest run --config src/testing/configs/agent.config.ts"
     },
     "keywords": [
         "mcp",
@@ -35,6 +38,7 @@
         "zod": "^3"
     },
     "devDependencies": {
+        "@anthropic-ai/sdk": "^0.30.0",
         "@types/node": "^22.0.0",
         "typescript": "^5.7.0",
         "vitest": "^2.1.0"
