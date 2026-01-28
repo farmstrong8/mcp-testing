@@ -33,4 +33,7 @@ jobs:
               run: npm run test
 
             - name: Run integration tests
-              run: npm run test:integration
+              run: npm run test:integration --workspace=jest
+
+            - name: Run E2E tests
+              run: npm run test:e2e --workspace=jest
